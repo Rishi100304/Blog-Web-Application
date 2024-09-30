@@ -6,11 +6,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.set('views', path.join(__dirname, 'views'));
-
 const app = express();
 const port = 3000;
 let posts = [];
-app.set('views', path.join(__dirname, 'views'));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.get("/", (req,res) => {
