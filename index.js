@@ -24,7 +24,7 @@ app.get("/contact", (req,res) => {
     res.render(path.join(__dirname,"views/contact.ejs"));
 });
 app.get("/about", (req,res) => {
-    res.render(path.join(__dirname,"views/about.ejs"));
+    res.render(path.join(__dirname,"views/about.ejs"), { photo : __dirname });
 });
 
 app.post("/post", (req, res) => {
