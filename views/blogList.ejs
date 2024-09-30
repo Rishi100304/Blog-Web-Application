@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/layout.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+html{
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body{
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  padding-bottom: 6.74rem;
+  box-sizing: inherit;
+  background-color: #ECDFCC;
+  color: #697565;
+}
+
+main{
+  width: 80%;
+  margin: 0 auto;
+}
+header{
+  background-color: #697565;
+}
+
+h1,h4{
+  text-align: center;
+  padding-bottom: 10px;
+  width: 100%;
+}
+.main,.blog-card{
+  border: 2px solid #697565;
+  color: #ECDFCC;
+  background-color: #697565;
+}
+span{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: #ECDFCC;
+}
+
+.btn-wrapper{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+button{
+  margin-right: 10px;
+}
+footer{
+  padding: 50px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+
+p {
+  color: whtie;
+  margin-top: auto;
+  font-size: 1.1em;
+}
+
+.copyright {
+  color: black;
+  text-align: right;
+}
+li{
+  position: relative;
+}
+li:hover{
+  top:-2px;
+}
+    </style>
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+    <% if (posts.length < 1) { %>
+    <h1 class="py-3">
+        You don't have any blogs yet. Please visit <br />the home page to create a
+        new blog.
+    </h1>
+    <% } else { %>
+<h1 class="text-center py-3">Your Blogs</h1>
+<% } %>
+<% for( let index=0; index < posts.length; index++ ) { %>
+    <div class="blog-card p-4 p-md-5 mb-4 rounded text-body-emphasis">
+        <h4>
+            <%= posts[index].title %>
+        </h4>
+        <p>
+            <%= posts[index].content?.slice(0,300) %>
+                <% if (posts[index].content?.length> 299) { %> ...
+                    <a class="view-btn" href="/blogDetails/<%= posts[index].id %>">
+                        View Blog</a>
+                    <% } %>
+        </p>
+        <div class="btn-wrapper">
+            <form action="/delete/<%= posts[index].id %>" method="post">
+                <button class="delete-btn btn btn-warning">DELETE</button>
+                <a class="edit-btn btn btn-primary" href="/edit/<%=  posts[index].id %>">EDIT</a>
+            </form>
+            
+        </div>
+    </div>
+    <% } %>
+</body>
+</html>
+
+<%- include("partials/footer.ejs") %>
