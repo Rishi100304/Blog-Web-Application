@@ -12,7 +12,7 @@ app.set('views', path.join(__dirname, 'views'));
 const indexPath = path.join(__dirname,'views/index.ejs');
 
 let posts = [];
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended:true}));
 app.get("/", (req,res) => {
     res.render(indexPath);
