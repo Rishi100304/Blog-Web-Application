@@ -8,20 +8,23 @@ const app = express();
 const port = 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+const indexPath = path.join(__dirname,'views/index.ejs');
+
 let posts = [];
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.get("/", (req,res) => {
-    res.render('index.ejs');
+    res.render(indexPath);
 });
 app.get("/post", (req,res) => {
-    res.render("blogList.ejs",{ posts: posts });
+    res.render(path.join(__dirname,"views/blogList.ejs"),{ posts: posts });
 });
 app.get("/contact", (req,res) => {
-    res.render("contact.ejs");
+    res.render(path.join(__dirname,"views/contact.ejs"));
 });
 app.get("/about", (req,res) => {
-    res.render("about.ejs");
+    res.render(path.join(__dirname,"views/about.ejs"));
 });
 
 app.post("/post", (req, res) => {
@@ -33,7 +36,7 @@ app.post("/post", (req, res) => {
     content : newPostContent
   });
   console.log(posts);
-  res.render("blogList.ejs", {posts : posts});
+  res.render(path.join(__dirname,"views/blogList.ejs"), {posts : posts});
 });
 function generateID() {
   return Math.floor(Math.random() * 10000);
@@ -42,14 +45,14 @@ function generateID() {
 app.get("/blogDetails/:id", (req,res) => {
   const postId = req.params.id;
   const postDetails = posts.find((post) => post.id === parseInt(postId));
-  res.render("Details.ejs", {
+  res.render(path.join(__dirname,"views/Details.ejs"), {
     blogDetails : postDetails,
   });
 });
 app.get("/edit/:id", (req, res) => {
   const postId = req.params.id;
   const postDetails = posts.find((post) => post.id === parseInt(postId));
-  res.render("index.ejs", {
+  res.render(path.join(__dirname,"views/index.ejs"), {
     isEdit: true,
     blogDetails: postDetails,
   });
@@ -67,7 +70,7 @@ app.post("/edit/:id", (req, res) => {
   const blogDescription = (posts[editBlog].content = updatedDescription);
   [...posts, { blogTitle: blogTitle, blogDescription: blogDescription }];
 
-  res.render("blogList.ejs", {
+  res.render(path.join(__dirname,"views/blogList.ejs"), {
     isEdit: true,
     posts: posts,
   });
